@@ -261,6 +261,7 @@ static Atom wmatom[WMLast], netatom[NetLast];
 static int running = 1;
 static int restart = 1;
 static char *termcmd[]  = { NULL, NULL };
+static char *browsercmd[]  = { NULL, NULL };
 static Cur *cursor[CurLast];
 static Clr **scheme;
 static Display *dpy;
@@ -1582,6 +1583,10 @@ setup(void)
 	while (waitpid(-1, NULL, WNOHANG) > 0);
 
 	/* load environment variable(s) */
+	browsercmd[0] = getenv(BROWSER_ENVVAR);
+	if (browsercmd[0] == NULL) {
+		die("couldn't load " BROWSER_ENVVAR " environment variable.");
+	}
 	termcmd[0] = getenv(TERMINAL_ENVVAR);
 	if (termcmd[0] == NULL) {
 		die("couldn't load " TERMINAL_ENVVAR " environment variable.");
