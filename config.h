@@ -67,6 +67,7 @@ static const int dmenudesktop = 1; /* 1 means dmenu will use only desktop files 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *flameshotcmd[] = { "flameshot", "gui", NULL };
 #define TERMINAL_ENVVAR "TERMINAL"
 #define BROWSER_ENVVAR "BROWSER"
 
@@ -75,6 +76,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_x,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	                XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,	                XK_b,      spawn,          {.v = browsercmd } },
+	{ MODKEY,	                XK_s,      spawn,          {.v = flameshotcmd } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_grave,  focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
