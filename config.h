@@ -77,6 +77,7 @@ static const Key keys[] = {
 	{ MODKEY,	                XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,	                XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY,	                XK_s,      spawn,          {.v = flameshotcmd } },
+	{ MODKEY,			XK_f,      spawn,          {.v = rangercmd } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_grave,  focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
