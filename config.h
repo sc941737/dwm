@@ -53,11 +53,12 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define AltMask Mod1Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \ 
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -73,36 +74,44 @@ static const char *flameshotcmd[] = { "flameshot", "gui", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_x,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,	                XK_t,      spawn,          {.v = termcmd } },
-	{ MODKEY,	                XK_b,      spawn,          {.v = browsercmd } },
-	{ MODKEY,	                XK_s,      spawn,          {.v = flameshotcmd } },
-	{ MODKEY,			XK_f,      spawn,          {.v = rangercmd } },
-	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_grave,  focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,	                XK_q,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_q,      quitprompt,     {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quitprompt,     {0} },
-	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY|ShiftMask,		XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,             XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ShiftMask,             XK_g,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
-	{ MODKEY|ControlMask,           XK_f,      togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	// COMMON APPS
+	{ MODKEY,                       XK_x,      spawn,          {.v = dmenucmd } }, // app launcher
+	{ MODKEY,	                XK_t,      spawn,          {.v = termcmd } }, // terminal
+	{ MODKEY,	                XK_b,      spawn,          {.v = browsercmd } }, // browser
+	{ MODKEY,	                XK_s,      spawn,          {.v = flameshotcmd } }, // screenshot tool
+	{ MODKEY,			XK_f,      spawn,          {.v = rangercmd } }, // file manager
+	// WINDOW NAVIGATION
+	{ MODKEY,                       XK_grave,  focusstack,     {.i = +1 } }, // cycle window focus
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } }, // switch focus to window down
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } }, // switch focus to window up
+	{ MODKEY,	                XK_q,      killclient,     {0} }, // quit app
+	{ MODKEY|ShiftMask,             XK_q,      quitwmprompt,   {0} }, // DWM session exit prompt
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      shutdownprompt, {0} }, // shutdown the system
+	// WINDOW LAYOUT
+	{ MODKEY,                       XK_Return, zoom,           {0} }, // make selected the master window
+	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, // add master window slot
+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, // subtract master window slot
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} }, // increase master width
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} }, // decrease master width
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} }, // hide top bar
+	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} }, // tiling
+	{ MODKEY|ShiftMask,		XK_f,      setlayout,      {.v = &layouts[1]} }, // floating
+	{ MODKEY|ShiftMask,             XK_m,      setlayout,      {.v = &layouts[2]} }, // maximised
+	{ MODKEY|ShiftMask,             XK_g,      setlayout,      {.v = &layouts[3]} }, // grid
+	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} }, // switch between last two layouts
+	// WINDOW MODES
+	{ MODKEY|ControlMask,           XK_f,      togglefloating, {0} }, // make window floating
+	{ MODKEY|AltMask,               XK_f,      togglefullscr,  {0} }, // make window full screen
+	// TAG NAVIGATION
+	{ MODKEY,                       XK_Tab,    view,           {0} }, // switch between last two tags
+	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } }, // view all tags
+	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, // stick selected to all tags
+	// MONITOR NAVIGATION
+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } }, // switch focus to monitor up
+	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } }, // switch focus to monitor down
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } }, // move window to monitor up
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } }, // move window to monitor down
+	// TAG KEYS
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

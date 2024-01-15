@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/reboot.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <X11/cursorfont.h>
@@ -187,7 +188,8 @@ static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
-static void quitprompt(const Arg *arg);
+static void quitwmprompt(const Arg *arg);
+static void shutdownprompt(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizeclient(Client *c, int x, int y, int w, int h);
@@ -211,6 +213,7 @@ static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglefullscr(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -1243,13 +1246,13 @@ quit(const Arg *arg)
 }
 
 void
-quitprompt(const Arg *arg)
+quitwmprompt(const Arg *arg)
 {
-	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -i -sb red -p \"Quit DWM?\"", "r");
+	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -fn 'Hack-22' -c -l 4 -i -sb red -p \"Quit DWM?\"", "r");
 	if(pp != NULL) {
 		char buf[1024];
 		if (fgets(buf, sizeof(buf), pp) == NULL) {
-			fprintf(stderr, "Quitprompt: Error reading pipe!\n");
+			fprintf(stderr, "quitwmprompt: Error reading pipe!\n");
 			return;
 		}
 		if (strcmp(buf, "yes\n") == 0) {
@@ -1260,6 +1263,35 @@ quitprompt(const Arg *arg)
 			pclose(pp);
 			restart = 1;
 			quit(NULL);
+		} else if (strcmp(buf, "no\n") == 0) {
+			pclose(pp);
+			return;
+		}
+	}
+}
+
+void
+shutdownprompt(const Arg *arg)
+{
+	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -fn 'Hack-22' -c -l 4 -i -sb red -p \"Shutdown the system?\"", "r");
+	if(pp != NULL) {
+		char buf[1024];
+		if (fgets(buf, sizeof(buf), pp) == NULL) {
+			fprintf(stderr, "shutdownprompt: Error reading pipe!\n");
+			return;
+		}
+		if (strcmp(buf, "yes\n") == 0) {
+			pclose(pp);
+			sync();
+			setuid(0);
+			reboot(RB_POWER_OFF);
+			return(0);
+		} else if (strcmp(buf, "restart\n") == 0) {
+			pclose(pp);
+			sync();
+			setuid(0);
+			reboot(RB_AUTOBOOT);
+			return(0);
 		} else if (strcmp(buf, "no\n") == 0) {
 			pclose(pp);
 			return;
@@ -1535,6 +1567,14 @@ setfullscreen(Client *c, int fullscreen)
 		resizeclient(c, c->x, c->y, c->w, c->h);
 		arrange(c->mon);
 	}
+}
+
+Layout *last_layout;
+void
+togglefullscr(const Arg *arg)
+{
+	if (selmon->sel)
+		setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
 }
 
 void
