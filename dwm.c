@@ -1282,15 +1282,14 @@ shutdownprompt(const Arg *arg)
 		}
 		if (strcmp(buf, "yes\n") == 0) {
 			pclose(pp);
-			sync();
 			setuid(0);
-			reboot(RB_POWER_OFF);
+			system("shutdown now");
 			return(0);
 		} else if (strcmp(buf, "restart\n") == 0) {
 			pclose(pp);
 			sync();
 			setuid(0);
-			reboot(RB_AUTOBOOT);
+			system("reboot");
 			return(0);
 		} else if (strcmp(buf, "no\n") == 0) {
 			pclose(pp);
