@@ -1255,7 +1255,7 @@ quit(const Arg *arg)
 void
 quitwmprompt(const Arg *arg)
 {
-	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -fn 'Hack-22' -c -l 4 -i -sb red -p \"Quit DWM?\"", "r");
+	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -fn 'Hack-14' -c -l 4 -i -sb red -p \"Quit DWM?\"", "r");
 	if(pp != NULL) {
 		char buf[1024];
 		if (fgets(buf, sizeof(buf), pp) == NULL) {
@@ -1280,7 +1280,7 @@ quitwmprompt(const Arg *arg)
 void
 shutdownprompt(const Arg *arg)
 {
-	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -fn 'Hack-22' -c -l 4 -i -sb red -p \"Shutdown the system?\"", "r");
+	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -fn 'Hack-14' -c -l 4 -i -sb red -p \"Shutdown the system?\"", "r");
 	if(pp != NULL) {
 		char buf[1024];
 		if (fgets(buf, sizeof(buf), pp) == NULL) {
