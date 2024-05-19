@@ -77,8 +77,10 @@ static const char *flameshotcmd[] = { "flameshot", "gui", NULL };
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	// SYSTEM SETTINGS
-	{ MODKEY,		XK_minus,	   spawn,      	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,		XK_equal,  	   spawn,      	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_minus,  spawn,      	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_equal,  spawn,      	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|AltMask,		XK_minus,  spawn,      	   SHCMD("sudo blocks-brightness dec") },
+	{ MODKEY|AltMask,		XK_equal,  spawn,      	   SHCMD("sudo blocks-brightness inc") },
 	// COMMON APPS
 	{ MODKEY,                       XK_x,      spawn,          {.v = dmenucmd } }, // app launcher
 	{ MODKEY,	                XK_t,      spawn,          {.v = termcmd } }, // terminal
