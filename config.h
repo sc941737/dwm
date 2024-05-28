@@ -16,12 +16,12 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_black[]       = "#000000";
 static const char col_lgreen[]      = "#aaff00";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_lgreen  },
+	[SchemeNorm] = { col_gray3, col_black, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_gray1, col_lgreen },
 };
 
 /* tagging */
@@ -69,7 +69,7 @@ static const int dmenudesktop = 1; /* 1 means dmenu will use only desktop files 
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-c", "-i", "-l", "30", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run:", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-c", "-i", "-l", "30", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_gray4, "-p", "Run:", NULL };
 static const char *flameshotcmd[] = { "flameshot", "gui", NULL };
 #define TERMINAL_ENVVAR "TERMINAL"
 #define BROWSER_ENVVAR "BROWSER"
