@@ -73,6 +73,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-c", "-i", "-l", "30", "-m", dme
 static const char *flameshotcmd[] = { "flameshot", "gui", NULL };
 #define TERMINAL_ENVVAR "TERMINAL"
 #define BROWSER_ENVVAR "BROWSER"
+#define FILE_MANAGER_ENVVAR "FILE_MANAGER"
+#define EDITOR_ENVVAR "EDITOR"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -86,7 +88,8 @@ static const Key keys[] = {
 	{ MODKEY,	                XK_t,      spawn,          {.v = termcmd } }, // terminal
 	{ MODKEY,	                XK_b,      spawn,          {.v = browsercmd } }, // browser
 	{ MODKEY,	                XK_s,      spawn,          {.v = flameshotcmd } }, // screenshot tool
-	{ MODKEY,			XK_f,      spawn,          {.v = rangercmd } }, // file manager
+	{ MODKEY,			XK_f,      spawn,          {.v = filemancmd } }, // file manager
+	{ MODKEY,			XK_e,      spawn,          {.v = editorcmd } }, // editor
 	// WINDOW NAVIGATION
 	{ MODKEY,                       XK_grave,  focusstack,     {.i = +1 } }, // cycle window focus
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } }, // switch focus to window down
