@@ -1350,13 +1350,13 @@ shutdownprompt(const Arg *arg)
 			pclose(pp);
 			setuid(0);
 			system("shutdown now");
-			return(0);
+			return;
 		} else if (strcmp(buf, "restart\n") == 0) {
 			pclose(pp);
 			sync();
 			setuid(0);
 			system("reboot");
-			return(0);
+			return;
 		} else if (strcmp(buf, "no\n") == 0) {
 			pclose(pp);
 			return;
