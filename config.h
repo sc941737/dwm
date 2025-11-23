@@ -71,10 +71,10 @@ static const int dmenudesktop = 1; /* 1 means dmenu will use only desktop files 
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-c", "-i", "-l", "30", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_gray4, "-p", "Run:", NULL };
 static const char *flameshotcmd[] = { "flameshot", "gui", NULL };
+static const char *editorcmd[] = { "emacsclient", "-nc", NULL };
 #define TERMINAL_ENVVAR "TERMINAL"
 #define BROWSER_ENVVAR "BROWSER"
 #define FILE_MANAGER_ENVVAR "FILE_MANAGER"
-#define EDITOR_ENVVAR "EDITOR"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */

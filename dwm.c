@@ -272,7 +272,6 @@ static int restart = 1;
 static char *termcmd[]  = { NULL, NULL };
 static char *browsercmd[]  = { NULL, NULL };
 static char *filemancmd[] = { "-e", "yazi", NULL };
-static char *editorcmd[] = { "-e", "nvim", NULL };
 static Cur *cursor[CurLast];
 static Clr **scheme;
 static Display *dpy;
@@ -1699,11 +1698,7 @@ setup(void)
 	}
 	filemancmd[0] = getenv(TERMINAL_ENVVAR);
 	if (filemancmd[0] == NULL) {
-		die("couldn't load " TERMINAL_ENVVAR " environment variable.");
-	}
-	editorcmd[0] = getenv(TERMINAL_ENVVAR);
-	if (editorcmd[0] == NULL) {
-		die("couldn't load " TERMINAL_ENVVAR " environment variable.");
+		die("couldn't load "TERMINAL_ENVVAR " environment variable.");
 	}
 
 	/* init screen */
